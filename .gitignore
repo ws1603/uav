@@ -1,0 +1,22 @@
+# Conda虚拟环境（避免上传庞大的环境文件夹）
+uav_teaching_system/
+env/
+venv/
+.conda/
+
+# Python缓存文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 日志文件
+*.log
+*.tmp
+
+# 系统隐藏文件
+.DS_Store（Mac）
+Thumbs.db（Windows）
+
+# 编辑器配置文件（如VS Code）
+.vscode/

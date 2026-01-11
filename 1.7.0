@@ -1,0 +1,6 @@
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple
+Collecting scipy
+  Using cached https://pypi.tuna.tsinghua.edu.cn/packages/3e/77/dab54fe647a08ee4253963bcd8f9cf17509c8ca64d6335141422fe2e2114/scipy-1.13.1-cp39-cp39-win_amd64.whl (46.2 MB)
+Requirement already satisfied: numpy<2.3,>=1.22.4 in c:\users\atlas\.conda\envs\uav_teaching_system\lib\site-packages (from scipy) (2.0.2)
+Installing collected packages: scipy
+Successfully installed scipy-1.13.1

@@ -1,0 +1,136 @@
+## config/default_config.yaml（修复版）
+#
+## 低空交通无人机教学演示系统 - 默认配置
+#
+#drone:
+#  mass: 1.5
+#  arm_length: 0.225
+#  max_rpm: 12000
+#  motor_constant: 8.54858e-06
+#  moment_constant: 0.016
+#  inertia_xx: 0.029125
+#  inertia_yy: 0.029125
+#  inertia_zz: 0.055225
+#  drag_coefficient: 0.1
+#
+#control:
+#  # 位置控制PID参数
+#  position_kp: [2.0, 2.0, 4.0]
+#  position_ki: [0.1, 0.1, 0.2]
+#  position_kd: [1.5, 1.5, 2.0]
+#
+#  # 速度控制PID参数
+#  velocity_kp: [4.0, 4.0, 6.0]
+#  velocity_ki: [0.5, 0.5, 0.8]
+#  velocity_kd: [0.5, 0.5, 0.5]
+#
+#  # 姿态控制PID参数
+#  attitude_kp: [8.0, 8.0, 4.0]
+#  attitude_ki: [0.5, 0.5, 0.2]
+#  attitude_kd: [2.0, 2.0, 1.0]
+#
+#  # 角速度控制PID参数
+#  rate_kp: [0.15, 0.15, 0.1]
+#  rate_ki: [0.01, 0.01, 0.01]
+#  rate_kd: [0.01, 0.01, 0.01]
+#
+#  # 限制参数
+#  max_velocity: 15.0
+#  max_acceleration: 5.0
+#  max_tilt_angle: 0.5236
+#  max_yaw_rate: 1.5708
+#
+#simulation:
+#  dt: 0.002
+#  realtime_factor: 1.0
+#  gravity: 9.81
+#  air_density: 1.225
+#
+#visualization:
+#  update_rate: 30
+#  trail_length: 500
+#  grid_size: 100
+#  show_axes: true
+#  show_grid: true
+
+# config/default_config.yaml（修复版）
+
+# 低空交通无人机教学演示系统 - 默认配置文件
+
+# 仿真参数
+simulation:
+  dt: 0.01                    # 仿真时间步长 (秒)
+  realtime_factor: 1.0        # 实时因子 (1.0 = 实时)
+  max_duration: 300.0         # 最大仿真时长 (秒)
+  gravity: 9.81               # 重力加速度 (m/s^2)
+
+# 无人机参数
+drone:
+  mass: 1.5                   # 质量 (kg)
+  arm_length: 0.25            # 机臂长度 (m)
+  inertia: [0.0165, 0.0165, 0.0293]  # 转动惯量 [Ixx, Iyy, Izz] (kg*m^2)
+  motor_constant: 8.54858e-06 # 电机推力常数 kf
+  moment_constant: 1.6e-02    # 电机力矩常数 km (力矩/推力比)
+  max_rpm: 10000              # 最大电机转速 (RPM)
+  min_rpm: 0                  # 最小电机转速 (RPM)
+  drag_coefficient: 0.1       # 空气阻力系数
+  rotor_drag_coefficient: 0.01  # 旋翼阻力系数
+
+# 控制器参数 - 修复：大幅降低增益
+control:
+  # 位置控制器 (外环)
+  position_kp: [1.0, 1.0, 1.5]        # 位置比例增益 [x, y, z]
+  position_ki: [0.0, 0.0, 0.0]        # 位置积分增益
+  position_kd: [0.0, 0.0, 0.0]        # 位置微分增益
+
+  # 速度控制器 (中环)
+  velocity_kp: [2.0, 2.0, 3.0]        # 速度比例增益
+  velocity_ki: [0.1, 0.1, 0.2]        # 速度积分增益
+  velocity_kd: [0.1, 0.1, 0.1]        # 速度微分增益
+
+  # 姿态控制器 (内环)
+  attitude_kp: [6.0, 6.0, 4.0]        # 姿态比例增益 [roll, pitch, yaw]
+  attitude_ki: [0.0, 0.0, 0.0]        # 姿态积分增益
+  attitude_kd: [0.0, 0.0, 0.0]        # 姿态微分增益
+
+  # 角速度控制器 (最内环)
+  rate_kp: [0.1, 0.1, 0.05]           # 角速度比例增益
+  rate_ki: [0.01, 0.01, 0.01]         # 角速度积分增益
+  rate_kd: [0.005, 0.005, 0.002]      # 角速度微分增益
+
+  # 控制限制
+  max_velocity: 5.0            # 最大速度 (m/s) - 降低
+  max_acceleration: 3.0        # 最大加速度 (m/s^2)
+  max_tilt_angle: 0.35         # 最大倾斜角 (rad, ~20度)
+  max_yaw_rate: 1.0            # 最大偏航角速度 (rad/s)
+
+# 传感器参数
+sensors:
+  imu:
+    gyro_noise: 0.001         # 陀螺仪噪声 (rad/s)
+    accel_noise: 0.01         # 加速度计噪声 (m/s^2)
+    update_rate: 400          # 更新频率 (Hz)
+
+  gps:
+    position_noise: 0.5       # 位置噪声 (m)
+    velocity_noise: 0.1       # 速度噪声 (m/s)
+    update_rate: 10           # 更新频率 (Hz)
+
+  barometer:
+    altitude_noise: 0.5       # 高度噪声 (m)
+    update_rate: 50           # 更新频率 (Hz)
+
+# 环境参数
+environment:
+  wind:
+    enabled: false            # 是否启用风场
+    base_speed: 0.0           # 基础风速 (m/s)
+    direction: [1, 0, 0]      # 风向
+    turbulence: 0.0           # 湍流强度
+
+# 可视化参数
+visualization:
+  update_rate: 30             # 界面更新频率 (Hz)
+  trail_length: 500           # 轨迹点数量
+  show_axes: true             # 显示坐标轴
+  show_grid: true             # 显示网格
